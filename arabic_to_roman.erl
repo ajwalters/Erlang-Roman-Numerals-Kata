@@ -10,36 +10,38 @@ convert(ArabicNumber) ->
       Reserved
   end.
 
-build_by_addition(Numeral) ->
-  {RomanNumeralBase, Remainder} = base_for_addition(Numeral),
-  build_by_addition(Remainder, RomanNumeralBase).
 
-build_by_addition(0, RomanBuilder) ->
-  RomanBuilder;
+build_by_addition(Integer) ->
+  build_by_addition(Integer, "").
 
-build_by_addition(Numeral, RomanBuilder) ->
-  build_by_addition(Numeral - 1, string:concat(RomanBuilder, "I")).
+build_by_addition(0, Builder) ->
+  Builder;
 
-base_for_addition(Numeral) ->
+build_by_addition(Integer, Builder) ->
+  {RomanValue, Remainder} = base_for_addition(Integer),
+  build_by_addition(Remainder, string:concat(Builder, RomanValue)).
+
+
+base_for_addition(Integer) ->
   if
-    Numeral > 1000 ->
-      {reserved_numeral(1000), Numeral - 1000};
-    Numeral > 500 ->
-      {reserved_numeral(500), Numeral - 500};
-    Numeral > 100 ->
-      {reserved_numeral(100), Numeral - 100};
-    Numeral > 50 ->
-      {reserved_numeral(50), Numeral - 50};
-    Numeral > 10 ->
-      {reserved_numeral(10), Numeral - 10};
-    Numeral > 5 ->
-      {reserved_numeral(5), Numeral - 5};
+    Integer >= 1000 ->
+      {reserved_numeral(1000), Integer - 1000};
+    Integer >= 500 ->
+      {reserved_numeral(500), Integer - 500};
+    Integer >= 100 ->
+      {reserved_numeral(100), Integer - 100};
+    Integer >= 50 ->
+      {reserved_numeral(50), Integer - 50};
+    Integer >= 10 ->
+      {reserved_numeral(10), Integer - 10};
+    Integer >= 5 ->
+      {reserved_numeral(5), Integer - 5};
     true ->
-      {reserved_numeral(1), Numeral - 1}
+      {reserved_numeral(1), Integer - 1}
   end.
 
-reserved_numeral(Numeral) ->
-  case Numeral of
+reserved_numeral(Integer) ->
+  case Integer of
     1 -> "I";
     5 -> "V";
     10 -> "X";

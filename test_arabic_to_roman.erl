@@ -19,4 +19,12 @@ convert_roman_numerals_based_on_addition_test_() ->
     ?_assertEqual("III", arabic_to_roman:convert(3)),
     ?_assertEqual("VI", arabic_to_roman:convert(6)),
     ?_assertEqual("VII", arabic_to_roman:convert(7)),
+    ?_assertEqual("XX", arabic_to_roman:convert(20)),
+    ?_assertEqual("LX", arabic_to_roman:convert(60)),
     ?_assertEqual("DIII", arabic_to_roman:convert(503))].
+
+% This tests that roman numerals that are built from left
+% to right subtracting the characters can be built
+% eg- IV, IX, 
+% convert_roman_numerals_based_on_addition_test_() ->
+%  [ ?_assertEqual("II", arabic_to_roman:convert(2))].
