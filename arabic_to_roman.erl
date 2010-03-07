@@ -10,7 +10,6 @@ convert(ArabicNumber) ->
       Reserved
   end.
 
-
 build_by_addition(Integer) ->
   build_by_addition(Integer, "").
 
@@ -18,8 +17,35 @@ build_by_addition(0, Builder) ->
   Builder;
 
 build_by_addition(Integer, Builder) ->
-  {RomanValue, Remainder} = base_for_addition(Integer),
+  {RomanValue, Remainder} = case integer_to_list(Integer) of
+    "4" ++ _TrailingNumbers ->
+      four_based_subtraction(Integer);
+    "9" ++ _TrailingNumbers ->
+      nine_based_subtraction(Integer);
+    _ ->
+      base_for_addition(Integer)
+  end,
   build_by_addition(Remainder, string:concat(Builder, RomanValue)).
+
+nine_based_subtraction(Integer) ->
+  if
+    Integer =< 9 ->
+      {"IX", Integer - 9};
+    Integer >= 90, Integer =< 99 ->
+      {"XC", Integer - 90};
+    Integer >= 900, Integer =< 999 ->
+      {"CM", Integer - 900}
+  end.
+
+four_based_subtraction(Integer) ->
+  if
+    Integer =< 4 ->
+      {"IV", Integer - 4};
+    Integer >= 40, Integer =< 49 ->
+      {"XL", Integer - 40};
+    Integer >= 400, Integer =< 499 ->
+      {"CD", Integer - 400}
+  end.
 
 
 base_for_addition(Integer) ->
