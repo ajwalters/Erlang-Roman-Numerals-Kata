@@ -1,31 +1,23 @@
 -module(arabic_to_roman).
 
--compile(export_all).
+-export([convert/1]).
 
 convert(ArabicNumber) ->
-  case reserved_numeral(ArabicNumber) of
-    nomatch ->
-      build_by_addition(ArabicNumber);
-    Reserved ->
-      Reserved
-  end.
+  convert(ArabicNumber, "").
 
-build_by_addition(Integer) ->
-  build_by_addition(Integer, "").
-
-build_by_addition(0, Builder) ->
+convert(0, Builder) ->
   Builder;
 
-build_by_addition(Integer, Builder) ->
+convert(Integer, Builder) ->
   {RomanValue, Remainder} = case integer_to_list(Integer) of
     "4" ++ _TrailingNumbers ->
       four_based_subtraction(Integer);
     "9" ++ _TrailingNumbers ->
       nine_based_subtraction(Integer);
     _ ->
-      base_for_addition(Integer)
+      next_roman(Integer)
   end,
-  build_by_addition(Remainder, string:concat(Builder, RomanValue)).
+  convert(Remainder, string:concat(Builder, RomanValue)).
 
 nine_based_subtraction(Integer) ->
   if
@@ -48,7 +40,7 @@ four_based_subtraction(Integer) ->
   end.
 
 
-base_for_addition(Integer) ->
+next_roman(Integer) ->
   if
     Integer >= 1000 ->
       {reserved_numeral(1000), Integer - 1000};
@@ -74,7 +66,6 @@ reserved_numeral(Integer) ->
     50 -> "L";
     100 -> "C";
     500 -> "D";
-    1000 -> "M";
-    _ -> nomatch
+    1000 -> "M"
   end.
 
