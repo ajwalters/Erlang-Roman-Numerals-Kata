@@ -25,7 +25,7 @@ nine_based_subtraction(Integer) ->
       {"IX", Integer - 9};
     Integer >= 90, Integer =< 99 ->
       {"XC", Integer - 90};
-    Integer >= 900, Integer =< 999 ->
+    true ->
       {"CM", Integer - 900}
   end.
 
@@ -35,7 +35,7 @@ four_based_subtraction(Integer) ->
       {"IV", Integer - 4};
     Integer >= 40, Integer =< 49 ->
       {"XL", Integer - 40};
-    Integer >= 400, Integer =< 499 ->
+    true ->
       {"CD", Integer - 400}
   end.
 
