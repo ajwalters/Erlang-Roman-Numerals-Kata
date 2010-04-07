@@ -1,0 +1,19 @@
+Roman numeral convertor written in Erlang.
+
+Currently only converts arabic numbers to roman numerals.
+
+Example Usage:
+$> arabic_to_roman:convert(2).
+"II"
+$> arabic_to_roman:convert(4).
+"IV"
+$> arabic_to_roman:convert(109).
+"CIX"
+
+This kata was based off the Roman Numberals Ruby Quiz (http://rubyquiz.com/quiz22.html).
+I only implemented the arabic to roman conversion and will return to the corresponding 
+challenge on a rainy day.
+
+The exercise was done test-first.  All tests can be found in test_arabic_to_roman.erl
+
+Feed appreciated!
